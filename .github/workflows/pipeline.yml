@@ -1,65 +1,44 @@
-# .github/workflows/pipeline.yml
-#
-# Triggers:
-#   - Every push to main
-#   - Daily at 06:00 UTC (scheduled run)
-#   - Manual trigger from the GitHub UI (workflow_dispatch)
-#
-# Secrets required (set in: Repo → Settings → Secrets → Actions):
-#   AZURE_STORAGE_ACCOUNT_NAME
-#   AZURE_STORAGE_ACCOUNT_KEY
-#   ADLS_FILESYSTEM_NAME        (optional, default = "raw")
-#   ADLS_DIRECTORY_PATH         (optional, default = "pipeline/output")
-
-name: ETL Pipeline
+name: ETL Pipeline Deployment
 
 on:
-  push:
-    branches: [main]
   schedule:
-    - cron: '0 14 * * *'       
-  workflow_dispatch:            # allows manual "Run workflow" button in GitHub UI
+    # Runs daily at 7:30 PM IST
+    # GitHub Actions uses UTC
+    # 7:30 PM IST = 2:00 PM UTC
+    - cron: '0 14 * * *'
+
+  workflow_dispatch:
 
 jobs:
-  run-pipeline:
-    name: Extract → Transform → Load
+  run-etl-pipeline:
+
     runs-on: ubuntu-latest
 
     steps:
 
-      # 1. Check out the repository code
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Set up the correct Python version
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
 
-      # 3. Cache pip dependencies (speeds up subsequent runs)
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      # 4. Install dependencies
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Run Unit Tests
+        run: |
+          pytest tests/ -v
 
-      # 5. Run unit tests BEFORE the real pipeline
-      #    If any test fails, the pipeline step is skipped entirely
-      - name: Run unit tests
-        run: pytest tests/ -v
-
-      # 6. Run the ETL pipeline
-      #    Secrets are injected as environment variables — never appear in logs
-      - name: Run ETL pipeline
+      - name: Run ETL Pipeline
         env:
           AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
-          AZURE_STORAGE_ACCOUNT_KEY:  ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
-          ADLS_FILESYSTEM_NAME:       ${{ secrets.ADLS_FILESYSTEM_NAME }}
-          ADLS_DIRECTORY_PATH:        ${{ secrets.ADLS_DIRECTORY_PATH }}
-        run: python -m pipeline.main
+          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+          ADLS_FILESYSTEM_NAME: ${{ vars.ADLS_FILESYSTEM_NAME }}
+          ADLS_DIRECTORY_PATH: ${{ vars.ADLS_DIRECTORY_PATH }}
+
+        run: |
+          python main.py

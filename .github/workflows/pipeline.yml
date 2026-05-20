@@ -17,7 +17,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 6 * * *"       # daily at 06:00 UTC
+    - cron: '0 14 * * *'       
   workflow_dispatch:            # allows manual "Run workflow" button in GitHub UI
 
 jobs:

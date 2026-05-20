@@ -2,8 +2,7 @@ name: ETL Pipeline Deployment
 
 on:
   schedule:
-    # 7:50 PM IST = 2:20 PM UTC
-    - cron: '20 14 * * *'
+    - cron: '*/5 * * * *'
 
   # Manual trigger from GitHub Actions UI
   workflow_dispatch:

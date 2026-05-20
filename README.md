@@ -335,15 +335,3 @@ data_20260520T142000Z.csv
 
 ## 👤 Author
 
-**Praveen Krishnan**  
-*Aspiring Data Engineer*
-
-Focused on: Data Engineering · Cloud Data Platforms · Azure Data Solutions · MLOps · AI/ML Systems
-
----
-
-<div align="center">
-
-*Built with Python 🐍 · Deployed on Azure ☁️ · Automated with GitHub Actions ⚙️*
-
-</div>

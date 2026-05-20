@@ -3,9 +3,9 @@ name: ETL Pipeline Deployment
 on:
 
   # Run automatically on every push to main branch
-  push:
-    branches:
-      - main
+  #push:
+    #branches:
+      #- main
 
   # Manual trigger
   workflow_dispatch:

@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔄 Automated Cloud ETL Pipeline
+# 🔄 Cloud ETL Pipeline
 ### Python · GitHub Actions · Azure Data Lake Storage
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)

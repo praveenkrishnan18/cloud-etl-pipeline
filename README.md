@@ -19,8 +19,6 @@
 
 <img width="1536" height="1024" alt="etl-pipeline architecture" src="https://github.com/user-attachments/assets/1ad923f2-7c58-4c91-888f-778a127aa8e6" />
 
-> **📌 Diagram placeholder** — replace this block with your architecture image.
-
 ---
 
 ## 📖 Overview

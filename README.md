@@ -325,11 +325,3 @@ data_20260520T142000Z.csv
 
 ---
 
-## 🧠 Skills Demonstrated
-
-`ETL Pipelines` · `Cloud Storage Integration` · `CI/CD Automation` · `GitHub Actions` · `Python Scripting` · `Data Transformation` · `Unit Testing` · `Secrets Management` · `Azure Cloud Services` · `Logging & Observability`
-
----
-
-## 👤 Author
-
